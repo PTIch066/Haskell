@@ -1,0 +1,53 @@
+ lines (28 sloc)  1.59 KB
+   
+-- Лабораторна робота 3
+-- студента групи КН-31
+-- підгрупа 2
+-- Ясинського Дениса
+-- Варіант №23
+
+1.8 Повторити n-кратно кожен елемент списку, напр. при n=2: "asd"⇒
+[’a’, ’a’, ’s’, ’s’, ’d’, ’d’].
+
+2.8 Обчислити функцiю Ейлера φ(m).
+
+-- Тести:
+-- *Main> f1 2 "frog"
+-- "frogfrog"
+
+-- *Main> f2 3 "up"
+-- "upupupup"
+
+-- *Main> f3 68
+-- 32
+
+-- *Main> f4 24
+-- 8
+
+import Text.XHtml.Transitional (multiple)
+
+f1 :: Int -> String -> String
+f1 1 str  = str
+f1 amount str =  concat $ replicate amount str
+
+f2 :: Int -> String -> String
+f2 1 str  = str
+f2 amount str = str ++ f1 (amount - 1) str
+
+
+-- f3 :: Int -> Int
+f3 = helper 1 0
+helper i amount num
+    | i == num = amount
+    | prime i = helper (i + 1) (amount + 1) num
+    | otherwise = helper (i + 1) amount num
+
+f4 :: Int -> Int
+f4 n = length [x | x <- [1..n], coprime x n]
+
+coprime :: Int -> Int -> Bool
+coprime n m = gcd n m == 1
+
+prime :: (Integral a) => a -> Bool
+prime 1 = True
+prime x = and [ x `mod` y /= 0 | y <- [2..(x-1)] ]
